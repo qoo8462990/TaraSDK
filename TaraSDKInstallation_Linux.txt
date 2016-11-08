@@ -1,0 +1,176 @@
+						Tara SDK USER MANUAL FOR LINUX
+				---------------------------------------------------
+				
+1. RELEASE PACKAGE DETAILS
+##########################
+
+The release package Tara_SDK_LINUX_REL_package_xxxx.tar.gz is compressed (i.e tar.gz) file which will provide the SDK made for Tara(stereo camera).
+
+
+2. Installing Tara SDK Package:
+###############################
+
+In order to install the Tara SDK package, the steps to be followed are
+
+	i. Extract the tar archive using the command. After running the command, there will be a
+		directory named ‘Tara_SDK_LINUX_REL_PACKAGE_xxxx’
+			$ tar -xhzvf Tara_SDK_LINUX_REL_package_xxxx.tar.gz
+
+	ii. Change the location to the Prebuilts folder in the extracted package.
+			$ cd <Extracted Package Location>/Tara_SDK_LINUX_REL_PACKAGE_xxxx/Prebuilts
+
+	iii. Run the install.sh shell script with superuser privilege. This will install the prebuilt 
+		binaries and libraries for the respective LTS version and architecture into the path 
+		“/usr/local/tara-sdk” and append the path variables to bashrc and /etc/profile.
+			$ sudo ./install.sh
+			
+	iv. Reload the shell to use the modified environment variables by using the command.
+			$ source ~/.bashrc
+			
+Note : In Tara_SDK_LINUX_REL_package_xxxx : xxxx refers to the release version.
+	
+	
+3. CONTENTS OF THE RELEASE PACKAGE
+##################################
+
+	The directory 'Tara_SDK_LINUX_REL_package_xxxx' contains the following
+	
+Tara_SDK_LINUX_REL_package_xxxx
+.
+|-- Documents
+|   |-- Tara_Linux_API_Manual.pdf
+|   |-- Tara_SDK_IMU_SampleApp_User_Manual.pdf
+|   `-- Tara_SDK_Linux_User_Manual.pdf
+|     
+|-- Prebuilts
+|   `-- Ubuntu-14.04
+|   |   |-- binary
+|   |	|-- binary_x64
+|   |	|-- lib
+|   |   `-- lib_x64
+|   |
+|   `-- install.sh
+|   `-- uninstall.sh
+|
+`-- Source
+    |-- common
+    |-- examples
+    |-- opencv-patch
+    `-- README.txt
+	
+
+1. Documents					-	This folder contains user manuals of Tara(See3CAM_Stereo) 
+									camera.		
+	
+		a) Tara_Linux_API_Manual.pdf : This document describes Tara namespace used in SDK
+		where all the common functions are put together.
+		
+		b) Tara_SDK_IMU_SampleApp_User_Manual.pdf : This document describes the usage
+		of an IMU unit(LSM6DS0) integrated with e-con's stereo camera - Tara in application
+		development.
+		
+		c) Tara_SDK_Linux_User_Manual.pdf - This pdf describes how to use the Tara SDK.
+
+2. Prebuilts					     								
+									
+		Ubuntu-14.04 			- Contains the executable of all the applications in the SDK.
+		The library files of the Tara and Extension unit and the dependency libraries of the OpenCV
+		are also placed. The executable and all the dependencies are build for both 32 and 64
+		bit respectively in Ubuntu-14.04.
+									
+		install.sh			-	This script file is used to install the application binaries 
+		and libraries in the '/usr/local/tara-sdk/'.
+		
+		uninstall.sh			-	This script file is used to uninstall the
+		application binaries and libraries in the '/usr/local/tara-sdk/'.
+
+3. Source					-	Source files
+		
+		a)	common			-	Contains the Source files for the commonly used functions.
+
+		b)	examples		- 	Contains the Source files for the sample applications.
+					
+		c)	opencv-patch		-	patch file for Y16 Opencv custom format support.
+
+			
+4. Dependencies to be Installed:
+################################
+
+Install the following dependencies for compiling OpenCV and to use Point cloud Library.
+
+	1. Some general development libraries
+		$ sudo apt-get install build-essential make cmake cmake-qt-gui g++
+
+	2. libav video input/output development libraries
+		$ sudo apt-get install libavformat-dev libavutil-dev libswscale-dev
+
+	3. Video4Linux camera development libraries
+		$ sudo apt-get install libv4l-dev
+
+	4. Eigen3 math development libraries
+		$ sudo apt-get install libeigen3-dev
+
+	5. OpenGL development libraries (to allow creating graphical windows)
+		$ sudo apt-get install libglew-dev
+
+	6. GTK development libraries (to allow creating graphical windows)
+		$ sudo apt-get install libgtk2.0-dev
+
+	7. Udev development libraries (to allow access to device information)
+		$ sudo apt-get install libudev-dev
+
+	8. Point Cloud Library
+		$ sudo add-apt-repository ppa:v-launchpad-jochen-sprickerhof-de/pcl
+		$ sudo apt-get update
+		$ sudo apt-get install libpcl-all
+	
+This commands will suggest additional dependency packages to be installed. Press 'y' to continue downloading the additional packages.
+
+
+5. How To Run Binaries in Prebuilts Folder:
+###########################################
+
+	To run the binaries, Make sure the the Tara SDK package is installed and dependencies are
+	installed. (Refer section-3 and section-4). If those steps are done, then run the applications
+	with the following command,
+	
+		$ sudo -i <BinaryName>
+		
+		For Example, $ sudo -i TaraCamViewer
+					 $ sudo -i FaceDetection
+		
+		List of Binaries : FaceDetection, HeightCalibration, HeightEstimation, ImuApplication, 
+		PointCloud, TaraCamViewer, TaraDepthViewer, TaraDisparityViewer, VolumeEstimation.
+	
+	i. Once the application is launched, list of enumerated camera devices will be displayed.
+	   Select the Device ID with the name See3CAM_Stereo.
+	   
+	ii. If the stereo Device ID is correctly selected, the resolutions supported by the device will be
+		displayed. Select the Resolution ID to start streaming the camera with that resolution.
+
+	iii. The image windows streaming the left and right frames or disparity are shown.
+		a) Press ‘q/Q/Esc’ on the image window to quit the application.
+		b) Press ‘e/E’ on the image window to change the exposure of the camera. Exposure
+			ranges from 10 to 1000000 micro seconds. Initially the exposure is set to 15000 micro
+			seconds.
+		c) Press ‘b/B’ on the image window to alter the brightness of the camera. Range is from 1
+			to 7.
+		d) Press ‘r/R’ on the image window to view the right image of the camera in the samples
+			where the right frame is not displayed.
+		e) Press ‘d/D’ on the image window to view the gray scale disparity map in the Depth
+			viewer and Disparity viewer application.
+
+Note : Refer to the Tara_SDK_Linux_User_Manual to know about each of the application included in SDK.
+		
+
+6. Uninstalling Tara SDK package:
+#################################		
+
+In order to uninstall the Tara SDK package, the steps to be followed are
+
+	i. Change the location to the Prebuilts folder in the extracted package.
+			$ cd <Extracted Package Location>/Tara_SDK_LINUX_REL_PACKAGE_xxxx/Prebuilts
+		
+	ii. Run the uninstall.sh shell script with superuser privilege. This will remove the binaries from
+		the installed location and delete the path variables added to bashrc and /etc/profile.
+			$ sudo ./uninstall.sh
